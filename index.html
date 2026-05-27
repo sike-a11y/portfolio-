@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Кирилл Чумаков • Портфолио</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f8fafc;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: #0f172a;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        .header {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .avatar-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #e0e7ff;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 3px solid #e0e7ff;
+        }
+        .avatar-wrapper:hover {
+            border-color: #4338ca;
+        }
+        .avatar-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #4338ca;
+            background: #e0e7ff;
+        }
+        .avatar-wrapper input {
+            display: none;
+        }
+        .badge {
+            background: #e0e7ff;
+            color: #4338ca;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            align-self: flex-start;
+            letter-spacing: 0.5px;
+        }
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #475569;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+        .project-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            border: 1px solid #f1f5f9;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+            border-color: #e2e8f0;
+        }
+        .project-icon {
+            font-size: 2rem;
+        }
+        .project-title {
+            font-weight: 650;
+            font-size: 1.3rem;
+        }
+        .project-desc {
+            color: #475569;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+        .tag {
+            background: #f1f5f9;
+            padding: 0.2rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #334155;
+            align-self: flex-start;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .skill {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 0.6rem 1.2rem;
+            border-radius: 999px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #1e293b;
+            transition: 0.15s;
+            cursor: default;
+        }
+        .skill:hover {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+        .contact {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            border: 1px solid #f1f5f9;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .contact a {
+            color: #4338ca;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .contact a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            border: 0.5px solid #e2e8f0;
+        }
+        .dashboard-section {
+            background: #0f172a;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            color: #e2e8f0;
+            overflow: hidden;
+        }
+        .dashboard-section h2 {
+            color: #e2e8f0;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .upload-zone {
+            border: 2px dashed #334155;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            background: #1e293b;
+        }
+        .upload-zone:hover {
+            border-color: #3b82f6;
+            background: #1e293b;
+        }
+        .upload-zone input {
+            display: none;
+        }
+        .upload-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .kpi-card {
+            background: #1e293b;
+            border-radius: 0.8rem;
+            padding: 1rem;
+            border: 1px solid #334155;
+        }
+        .kpi-label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .kpi-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.8rem;
+        }
+        .chart-card {
+            background: #1e293b;
+            border-radius: 0.8rem;
+            padding: 1rem;
+            border: 1px solid #334155;
+        }
+        .chart-card h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #cbd5e1;
+        }
+        .chart-container {
+            width: 100%;
+            height: 200px;
+        }
+        .chart-container canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .profile-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .contact {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Hero -->
+        <div class="header">
+            <div class="profile-row">
+                <!-- Аватар -->
+                <div class="avatar-wrapper" id="avatarWrapper" title="Нажмите, чтобы загрузить фото">
+                    <div class="avatar-placeholder" id="avatarPlaceholder">👤</div>
+                    <img id="avatarImg" src="" alt="Фото" style="display:none;">
+                    <input type="file" id="avatarInput" accept="image/*">
+                </div>
+                <div>
+                    <div class="badge">▷ Открыт к проектам</div>
+                </div>
+            </div>
+            <h1>Кирилл Чумаков</h1>
+            <p class="subtitle">
+                Специализируюсь на создании цифровых решений с использованием <strong>искусственного интеллекта</strong> и <strong>vibe-кодинга</strong> — подхода, в котором разработка ведётся в тандеме с AI-инструментами, что позволяет прототипировать и запускать продукты значительно быстрее классических методов. Нахожусь в начале профессионального пути, но компенсирую это высокой скоростью обучения: осваиваю новые технологии в процессе работы и довожу задачи до результата. Ищу возможности для практики и реальных проектов, чтобы расти вместе с командой.
+            </p>
+        </div>
+
+        <!-- Проекты -->
+        <section>
+            <h2 style="font-size: 1.7rem; margin-bottom: 1.2rem; font-weight: 600;">Избранные проекты</h2>
+            <div class="projects-grid">
+
+                <div class="project-card" onclick="document.getElementById('dashboardSection').scrollIntoView({behavior:'smooth'})">
+                    <div class="project-icon">📊</div>
+                    <div class="project-title">Metrica Dashboard</div>
+                    <div class="project-desc">Аналитическая панель с загрузкой отчётов из Excel и Word. Автоматический обсчёт метрик, визуализация данных на Canvas, экспорт результатов.</div>
+                    <span class="tag">Canvas API • Excel/Word • AI-assisted</span>
+                </div>
+
+                <a href="https://disk.yandex.ru/i/Xzg6RswucQO59Q" target="_blank" class="project-card">
+                    <div class="project-icon">🧩</div>
+                    <div class="project-title">Проект на Яндекс.Диске</div>
+                    <div class="project-desc">Рабочий прототип. Подробности по ссылке.</div>
+                    <span class="tag">Vibe-coding • Прототип</span>
+                </a>
+
+                <a href="https://disk.yandex.ru/i/Rn8xkvpb2ZPzTQ" target="_blank" class="project-card">
+                    <div class="project-icon">📁</div>
+                    <div class="project-title">Проект на Яндекс.Диске</div>
+                    <div class="project-desc">Экспериментальная разработка с применением AI-инструментов.</div>
+                    <span class="tag">AI-генерация • Макет</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Встроенный дашборд -->
+        <section class="dashboard-section" id="dashboardSection">
+            <h2>📊 Metrica Dashboard</h2>
+            <p style="color:#94a3b8; margin-bottom:1rem; font-size:0.9rem;">Загрузите отчёт из Excel (.xlsx) или Word (.docx) — метрики и графики перестроятся автоматически</p>
+
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">📂</div>
+                <p style="font-weight:600;">Перетащите файл сюда или нажмите</p>
+                <p style="color:#64748b; font-size:0.8rem;">Excel (.xlsx) • Word (.docx) • CSV</p>
+                <input type="file" id="fileInput" accept=".xlsx,.docx,.csv,.xls">
+            </div>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Всего записей</div>
+                    <div class="kpi-value" id="kpiTotal">—</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Сумма (руб)</div>
+                    <div class="kpi-value" id="kpiSum">—</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Среднее</div>
+                    <div class="kpi-value" id="kpiAvg">—</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Максимум</div>
+                    <div class="kpi-value" id="kpiMax">—</div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h4>📈 Распределение значений</h4>
+                    <div class="chart-container"><canvas id="chartDist"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <h4>📊 По категориям</h4>
+                    <div class="chart-container"><canvas id="chartCat"></canvas></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Технологии -->
+        <section>
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Технологии и инструменты</h2>
+            <div class="skills">
+                <span class="skill">AI-ассистенты (ChatGPT, DeepSeek, Copilot)</span>
+                <span class="skill">Vibe-coding</span>
+                <span class="skill">Prompt Engineering</span>
+                <span class="skill">JavaScript / TypeScript (базовый)</span>
+                <span class="skill">HTML & CSS</span>
+                <span class="skill">Canvas API</span>
+                <span class="skill">Tailwind CSS</span>
+                <span class="skill">Excel / Word — парсинг данных</span>
+                <span class="skill">Figma (базовый)</span>
+                <span class="skill">Git / GitHub</span>
+                <span class="skill">Быстрое прототипирование</span>
+                <span class="skill">Самообучение в процессе</span>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section>
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Связаться</h2>
+            <div class="contact">
+                <span>📧 <a href="mailto:alex@example.com">alex@example.com</a></span>
+                <span>💻 <a href="#">github/alexpetrov</a></span>
+                <span>💬 <a href="#">t.me/alexpetrov</a></span>
+            </div>
+        </section>
+
+        <hr>
+        <p style="color: #94a3b8; font-size: 0.85rem; text-align: center;">© 2026 Кирилл Чумаков — растущий специалист по AI-разработке</p>
+    </div>
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+
+    <script>
+        // ============ ЗАГРУЗКА ФОТО ============
+        const avatarWrapper = document.getElementById('avatarWrapper');
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarImg = document.getElementById('avatarImg');
+        const avatarPlaceholder = document.getElementById('avatarPlaceholder');
+
+        avatarWrapper.addEventListener('click', () => avatarInput.click());
+        avatarInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    avatarImg.src = ev.target.result;
+                    avatarImg.style.display = 'block';
+                    avatarPlaceholder.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // ============ ДАШБОРД ============
+        const dashboardData = { rawNumbers: [], categories: {}, fileName: '' };
+
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadZone.addEventListener('click', () => fileInput.click());
+        uploadZone.addEventListener('dragover', (e) => { e.preventDefault();
+            uploadZone.style.borderColor = '#3b82f6'; });
+        uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = '#334155'; });
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.style.borderColor = '#334155';
+            const file = e.dataTransfer.files[0];
+            if (file) processFile(file);
+        });
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) processFile(file);
+        });
+
+        function processFile(file) {
+            dashboardData.fileName = file.name;
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (ext === 'csv') {
+                const reader = new FileReader();
+                reader.onload = (e) => { parseCSV(e.target.result);
+                    updateDashboard(); };
+                reader.readAsText(file);
+            } else if (ext === 'xlsx' || ext === 'xls') {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                    parseSheetData(json);
+                    updateDashboard();
+                };
+                reader.readAsArrayBuffer(file);
+            } else if (ext === 'docx') {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    mammoth.extractRawText({ arrayBuffer: e.target.result }).then(result => {
+                        parseWordText(result.value);
+                        updateDashboard();
+                    });
+                };
+                reader.readAsArrayBuffer(file);
+            } else {
+                alert('Поддерживаются форматы: .xlsx, .docx, .csv');
+            }
+        }
+
+        function parseCSV(text) {
+            const lines = text.split('\n').filter(l => l.trim());
+            const numbers = [], categories = {};
+            lines.forEach(line => {
+                const cols = line.split(/[,\t;]/);
+                cols.forEach(col => {
+                    const num = parseFloat(col.trim().replace(/[₽$€%\s]/g, '').replace(',', '.'));
+                    if (!isNaN(num)) numbers.push(num);
+                });
+                if (cols.length >= 2) {
+                    const cat = cols[0].trim();
+                    const val = parseFloat(String(cols[1]).trim().replace(/[₽$€%\s]/g, '').replace(',', '.'));
+                    if (cat && !isNaN(val)) categories[cat] = (categories[cat] || 0) + val;
+                }
+            });
+            dashboardData.rawNumbers = numbers;
+            dashboardData.categories = categories;
+        }
+
+        function parseSheetData(rows) {
+            const numbers = [], categories = {};
+            rows.forEach(row => {
+                if (!row) return;
+                row.forEach(cell => {
+                    const num = parseFloat(String(cell).replace(/[₽$€%\s]/g, '').replace(',', '.'));
+                    if (!isNaN(num)) numbers.push(num);
+                });
+                if (row.length >= 2) {
+                    const cat = String(row[0]).trim();
+                    const val = parseFloat(String(row[1]).replace(/[₽$€%\s]/g, '').replace(',', '.'));
+                    if (cat && !isNaN(val)) categories[cat] = (categories[cat] || 0) + val;
+                }
+            });
+            dashboardData.rawNumbers = numbers;
+            dashboardData.categories = categories;
+        }
+
+        function parseWordText(text) {
+            const numbers = [], categories = {};
+            const lines = text.split('\n').filter(l => l.trim());
+            lines.forEach(line => {
+                const numMatch = line.match(/(\d[\d\s]*[.,]?\d*)\s*(₽|руб|%|шт)?/g);
+                if (numMatch) {
+                    numMatch.forEach(m => {
+                        const num = parseFloat(m.replace(/[₽руб%шт\s]/g, '').replace(',', '.'));
+                        if (!isNaN(num)) numbers.push(num);
+                    });
+                }
+                const parts = line.split(/[:\t]{1,}/);
+                if (parts.length >= 2) {
+                    const cat = parts[0].trim();
+                    const val = parseFloat(String(parts[1]).replace(/[₽$€%\s]/g, '').replace(',', '.'));
+                    if (cat && !isNaN(val)) categories[cat] = (categories[cat] || 0) + val;
+                }
+            });
+            dashboardData.rawNumbers = numbers;
+            dashboardData.categories = categories;
+        }
+
+        function updateDashboard() {
+            const nums = dashboardData.rawNumbers;
+            const cats = dashboardData.categories;
+            document.getElementById('kpiTotal').textContent = nums.length || '—';
+            const sum = nums.reduce((a, b) => a + b, 0);
+            document.getElementById('kpiSum').textContent = nums.length ? '₽' + sum.toLocaleString('ru-RU') : '—';
+            document.getElementById('kpiAvg').textContent = nums.length ? (sum / nums.length).toLocaleString('ru-RU', { maximumFractionDigits: 0 }) : '—';
+            document.getElementById('kpiMax').textContent = nums.length ? Math.max(...nums).toLocaleString('ru-RU') : '—';
+            drawDistributionChart(nums);
+            drawCategoryChart(cats);
+        }
+
+        function getCtx(id) {
+            const canvas = document.getElementById(id);
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * 2;
+            canvas.height = rect.height * 2;
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+            const ctx = canvas.getContext('2d');
+            ctx.scale(2, 2);
+            return { ctx, w: rect.width, h: rect.height };
+        }
+
+        function drawDistributionChart(numbers) {
+            const c = getCtx('chartDist');
+            if (!c) return;
+            const { ctx, w, h } = c;
+            const pad = { top: 15, right: 20, bottom: 35, left: 50 };
+            const pw = w - pad.left - pad.right;
+            const ph = h - pad.top - pad.bottom;
+            ctx.clearRect(0, 0, w, h);
+            if (numbers.length === 0) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = '14px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Нет данных', w / 2, h / 2);
+                return;
+            }
+            const min = Math.min(...numbers);
+            const max = Math.max(...numbers);
+            const range = max - min || 1;
+            const bins = 8;
+            const binWidth = range / bins;
+            const histogram = new Array(bins).fill(0);
+            numbers.forEach(n => { const idx = Math.min(Math.floor((n - min) / binWidth), bins - 1);
+                histogram[idx]++; });
+            const maxCount = Math.max(...histogram);
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i <= 3; i++) {
+                const y = pad.top + (ph / 3) * i;
+                ctx.beginPath();
+                ctx.moveTo(pad.left, y);
+                ctx.lineTo(w - pad.right, y);
+                ctx.stroke();
+            }
+            const barGap = 4;
+            const barW = (pw / bins) - barGap;
+            histogram.forEach((count, i) => {
+                const x = pad.left + (pw / bins) * i + barGap / 2;
+                const barH = (count / maxCount) * ph;
+                const y = pad.top + ph - barH;
+                const gradient = ctx.createLinearGradient(x, y, x, pad.top + ph);
+                gradient.addColorStop(0, '#3b82f6');
+                gradient.addColorStop(1, '#1d4ed8');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
+                ctx.fill();
+                ctx.fillStyle = '#64748b';
+                ctx.font = '9px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(Math.round(min + binWidth * i) + '-' + Math.round(min + binWidth * (i + 1)), x + barW /
+                    2, h - pad.bottom + 14);
+            });
+        }
+
+        function drawCategoryChart(categories) {
+            const c = getCtx('chartCat');
+            if (!c) return;
+            const { ctx, w, h } = c;
+            const pad = { top: 15, right: 20, bottom: 35, left: 50 };
+            const pw = w - pad.left - pad.right;
+            const ph = h - pad.top - pad.bottom;
+            ctx.clearRect(0, 0, w, h);
+            const entries = Object.entries(categories);
+            if (entries.length === 0) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = '14px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Нет категорий', w / 2, h / 2);
+                return;
+            }
+            const maxVal = Math.max(...entries.map(e => e[1]));
+            const barGap = 8;
+            const barW = (pw / entries.length) - barGap;
+            const colors = ['#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i <= 3; i++) {
+                const y = pad.top + (ph / 3) * i;
+                ctx.beginPath();
+                ctx.moveTo(pad.left, y);
+                ctx.lineTo(w - pad.right, y);
+                ctx.stroke();
+            }
+            entries.forEach(([cat, val], i) => {
+                const x = pad.left + (pw / entries.length) * i + barGap / 2;
+                const barH = (val / maxVal) * ph;
+                const y = pad.top + ph - barH;
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.beginPath();
+                ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
+                ctx.fill();
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '9px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                const shortCat = cat.length > 8 ? cat.slice(0, 7) + '…' : cat;
+                ctx.fillText(shortCat, x + barW / 2, h - pad.bottom + 14);
+            });
+        }
+
+        updateDashboard();
+    </script>
+</body>
+</html>

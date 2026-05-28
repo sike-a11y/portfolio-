@@ -35,13 +35,22 @@
             background: white; border-radius: 1.5rem; padding: 1.5rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.03); transition: all 0.2s ease;
             display: flex; flex-direction: column; gap: 0.7rem; border: 1px solid #f1f5f9;
-            text-decoration: none; color: inherit; cursor: pointer;
+            text-decoration: none; color: inherit; cursor: pointer; position: relative;
         }
         .project-card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-color: #e2e8f0; }
         .project-icon { font-size: 2rem; }
         .project-title { font-weight: 650; font-size: 1.3rem; }
         .project-desc { color: #475569; font-size: 0.95rem; flex: 1; }
         .tag { background: #f1f5f9; padding: 0.2rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 500; color: #334155; align-self: flex-start; }
+        .delete-project-btn {
+            position: absolute; top: 10px; right: 14px;
+            background: #fee2e2; color: #ef4444; border: none;
+            width: 28px; height: 28px; border-radius: 50%;
+            font-size: 16px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; line-height: 1;
+        }
+        .delete-project-btn:hover { background: #fecaca; }
         .skills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
         .skill { background: white; border: 1px solid #e2e8f0; padding: 0.6rem 1.2rem; border-radius: 999px; font-weight: 500; font-size: 0.9rem; color: #1e293b; transition: 0.15s; cursor: default; }
         .skill:hover { background: #0f172a; color: white; border-color: #0f172a; }
@@ -65,10 +74,56 @@
         .chart-container { width: 100%; height: 200px; }
         .chart-container canvas { width: 100%; height: 100%; }
 
+        /* Add project section */
+        .add-project-section {
+            background: white; border: 2px dashed #e2e8f0; border-radius: 1.5rem;
+            padding: 2rem; text-align: center; transition: all 0.2s ease;
+        }
+        .add-project-section:hover { border-color: #4338ca; background: #f8faff; }
+        .add-project-btn {
+            background: #4338ca; color: white; border: none;
+            padding: 0.8rem 2rem; border-radius: 999px;
+            font-weight: 600; font-size: 1rem; cursor: pointer;
+            transition: all 0.2s ease; margin-bottom: 0.5rem; font-family: inherit;
+        }
+        .add-project-btn:hover { background: #3730a3; transform: scale(1.02); }
+        .add-project-hint { color: #64748b; font-size: 0.9rem; }
+
+        /* Modal */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white; border-radius: 1.5rem; padding: 2rem;
+            width: 90%; max-width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        .modal-content h3 { margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.3rem; font-weight: 500; color: #334155; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 0.7rem; border: 1px solid #e2e8f0;
+            border-radius: 0.8rem; font-family: inherit; font-size: 0.95rem; resize: vertical;
+        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #4338ca; }
+        .form-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .btn-primary, .btn-secondary {
+            flex: 1; padding: 0.7rem; border-radius: 999px; border: none;
+            font-weight: 600; cursor: pointer; font-size: 0.95rem;
+            transition: all 0.2s ease; font-family: inherit;
+        }
+        .btn-primary { background: #4338ca; color: white; }
+        .btn-primary:hover { background: #3730a3; }
+        .btn-secondary { background: #f1f5f9; color: #334155; }
+        .btn-secondary:hover { background: #e2e8f0; }
+
         @media (max-width: 500px) {
             body { padding: 1rem 0.5rem; }
             .profile-row { flex-direction: column; align-items: flex-start; }
             .contact { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+            .projects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -93,54 +148,55 @@
         <!-- Проекты -->
         <section>
             <h2 style="font-size: 1.7rem; margin-bottom: 1.2rem; font-weight: 600;">Избранные проекты</h2>
-            <div class="projects-grid">
+            <div class="projects-grid" id="projectsGrid">
 
-                <div class="project-card" onclick="document.getElementById('dashboardSection').scrollIntoView({behavior:'smooth'})">
+                <div class="project-card" data-project-id="dashboard" onclick="document.getElementById('dashboardSection').scrollIntoView({behavior:'smooth'})">
                     <div class="project-icon">📊</div>
                     <div class="project-title">Metrica Dashboard</div>
                     <div class="project-desc">Аналитическая панель с загрузкой отчётов из Excel и Word. Автоматический обсчёт метрик, визуализация данных на Canvas, экспорт результатов.</div>
                     <span class="tag">Canvas API • Excel/Word • AI-assisted</span>
                 </div>
 
-                <a href="https://disk.yandex.ru/i/Xzg6RswucQO59Q" target="_blank" class="project-card">
-                    <div class="project-icon">🧩</div>
-                    <div class="project-title">Проект на Яндекс.Диске</div>
-                    <div class="project-desc">Рабочий прототип. Подробности по ссылке.</div>
-                    <span class="tag">Vibe-coding • Прототип</span>
+                <a href="https://stitch.withgoogle.com/preview/16962295633119832256?node-id=992c0ad36da34266bb8ea9873c78c1c7" target="_blank" class="project-card" data-project-id="stitch">
+                    <div class="project-icon">🏗️</div>
+                    <div class="project-title">AI Design Tool (Stitch)</div>
+                    <div class="project-desc">Интерактивный AI-инструмент для дизайна от Google. Генерация и редактирование интерфейсов в реальном времени с помощью искусственного интеллекта.</div>
+                    <span class="tag">Three.js • AI • WebGL</span>
                 </a>
 
-                <a href="https://car-explainer--kirill136368.replit.app/porsche-360/" target="_blank" class="project-card">
+                <a href="https://car-explainer--kirill136368.replit.app/porsche-360/" target="_blank" class="project-card" data-project-id="porsche">
                     <div class="project-icon">🏎️</div>
                     <div class="project-title">Porsche 360° X-Ray</div>
-                    <div class="project-desc">
-                        Интерактивный 3D-инструмент для изучения устройства Porsche. 
-                        Режим рентгена, детальный обзор двигателя, подвески, тормозов и других узлов.
-                    </div>
+                    <div class="project-desc">Интерактивный 3D-инструмент для изучения устройства Porsche. Режим рентгена, детальный обзор двигателя, подвески, тормозов и других узлов.</div>
                     <span class="tag">Three.js • WebGL • 3D</span>
                 </a>
 
             </div>
         </section>
 
+        <!-- Добавить проект -->
+        <section class="add-project-section">
+            <h3 style="margin-bottom: 1rem;">Добавить свой проект</h3>
+            <button class="add-project-btn" id="addProjectBtn">+ Новый проект</button>
+            <p class="add-project-hint">Вставьте ссылку, загрузите файл или заполните описание вручную</p>
+        </section>
+
         <!-- Встроенный дашборд -->
         <section class="dashboard-section" id="dashboardSection">
             <h2>📊 Metrica Dashboard</h2>
             <p style="color:#94a3b8; margin-bottom:1rem; font-size:0.9rem;">Загрузите отчёт из Excel (.xlsx) или Word (.docx) — метрики и графики перестроятся автоматически</p>
-
             <div class="upload-zone" id="uploadZone">
                 <div class="upload-icon">📂</div>
                 <p style="font-weight:600;">Перетащите файл сюда или нажмите</p>
                 <p style="color:#64748b; font-size:0.8rem;">Excel (.xlsx) • Word (.docx) • CSV</p>
                 <input type="file" id="fileInput" accept=".xlsx,.docx,.csv,.xls">
             </div>
-
             <div class="kpi-grid">
                 <div class="kpi-card"><div class="kpi-label">Всего записей</div><div class="kpi-value" id="kpiTotal">—</div></div>
                 <div class="kpi-card"><div class="kpi-label">Сумма (руб)</div><div class="kpi-value" id="kpiSum">—</div></div>
                 <div class="kpi-card"><div class="kpi-label">Среднее</div><div class="kpi-value" id="kpiAvg">—</div></div>
                 <div class="kpi-card"><div class="kpi-label">Максимум</div><div class="kpi-value" id="kpiMax">—</div></div>
             </div>
-
             <div class="charts-grid">
                 <div class="chart-card"><h4>📈 Распределение значений</h4><div class="chart-container"><canvas id="chartDist"></canvas></div></div>
                 <div class="chart-card"><h4>📊 По категориям</h4><div class="chart-container"><canvas id="chartCat"></canvas></div></div>
@@ -179,11 +235,46 @@
         <p style="color: #94a3b8; font-size: 0.85rem; text-align: center;">© 2026 Кирилл Чумаков — растущий специалист по AI-разработке</p>
     </div>
 
+    <!-- Модальное окно добавления проекта -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <h3>Добавить проект</h3>
+            <div class="form-group">
+                <label>Название проекта *</label>
+                <input type="text" id="projectName" placeholder="Мой крутой проект">
+            </div>
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea id="projectDesc" rows="2" placeholder="Что это за проект?"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Ссылка на проект</label>
+                <input type="url" id="projectLink" placeholder="https://...">
+            </div>
+            <div class="form-group">
+                <label>Технологии (через запятую)</label>
+                <input type="text" id="projectTech" placeholder="React, Node.js">
+            </div>
+            <div class="form-group">
+                <label>Эмодзи-иконка</label>
+                <input type="text" id="projectEmoji" placeholder="🚀" maxlength="2">
+            </div>
+            <div class="form-group">
+                <label>Или загрузите файл</label>
+                <input type="file" id="projectFileInput" accept=".html,.pdf,.zip,.rar,.7z,.jpg,.png,.gif">
+            </div>
+            <div class="form-actions">
+                <button class="btn-secondary" id="cancelProjectBtn">Отмена</button>
+                <button class="btn-primary" id="saveProjectBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
 
     <script>
-        // ============ ЗАГРУЗКА ФОТО (оставлена возможность сменить) ============
+        // ============ ЗАГРУЗКА ФОТО ============
         const avatarWrapper = document.getElementById('avatarWrapper');
         const avatarInput = document.getElementById('avatarInput');
         const avatarImg = document.getElementById('avatarImg');
@@ -202,6 +293,97 @@
                 reader.readAsDataURL(file);
             }
         });
+
+        // ============ ДОБАВЛЕНИЕ ПРОЕКТА ============
+        const projectsGrid = document.getElementById('projectsGrid');
+        const addProjectBtn = document.getElementById('addProjectBtn');
+        const modal = document.getElementById('projectModal');
+        const cancelBtn = document.getElementById('cancelProjectBtn');
+        const saveBtn = document.getElementById('saveProjectBtn');
+        const projectFileInput = document.getElementById('projectFileInput');
+
+        let projectCounter = Date.now();
+
+        addProjectBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            document.getElementById('projectName').focus();
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            clearForm();
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                clearForm();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                clearForm();
+            }
+        });
+
+        saveBtn.addEventListener('click', () => {
+            const name = document.getElementById('projectName').value.trim();
+            const desc = document.getElementById('projectDesc').value.trim();
+            const link = document.getElementById('projectLink').value.trim();
+            const tech = document.getElementById('projectTech').value.trim();
+            const emoji = document.getElementById('projectEmoji').value.trim() || '📁';
+            const file = projectFileInput.files[0];
+
+            if (!name) {
+                alert('Введите название проекта');
+                return;
+            }
+
+            projectCounter++;
+            const projectId = 'project-' + projectCounter;
+
+            let finalLink = link;
+            if (file) {
+                finalLink = URL.createObjectURL(file);
+            }
+
+            const card = document.createElement('a');
+            card.href = finalLink || '#';
+            card.target = (finalLink && finalLink.startsWith('http')) ? '_blank' : '_self';
+            card.className = 'project-card';
+            card.setAttribute('data-project-id', projectId);
+            card.innerHTML = `
+                <div class="project-icon">${emoji}</div>
+                <div class="project-title">${name}</div>
+                <div class="project-desc">${desc || 'Описание скоро появится'}</div>
+                <span class="tag">${tech || 'Технологии'}</span>
+                <button class="delete-project-btn" title="Удалить проект" onclick="deleteProject(event, '${projectId}')">✕</button>
+            `;
+
+            projectsGrid.appendChild(card);
+            modal.classList.remove('active');
+            clearForm();
+        });
+
+        function clearForm() {
+            document.getElementById('projectName').value = '';
+            document.getElementById('projectDesc').value = '';
+            document.getElementById('projectLink').value = '';
+            document.getElementById('projectTech').value = '';
+            document.getElementById('projectEmoji').value = '';
+            projectFileInput.value = '';
+        }
+
+        function deleteProject(event, projectId) {
+            event.preventDefault();
+            event.stopPropagation();
+            const card = document.querySelector(`[data-project-id="${projectId}"]`);
+            if (card && confirm('Удалить этот проект?')) {
+                card.remove();
+            }
+        }
 
         // ============ ДАШБОРД ============
         const dashboardData = { rawNumbers: [], categories: {}, fileName: '' };

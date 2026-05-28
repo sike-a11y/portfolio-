@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Кирилл Чумаков • Портфолио</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #f8fafc;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -19,279 +15,74 @@
             display: flex;
             justify-content: center;
         }
-        .container {
-            max-width: 900px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-        }
-        .header {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        .profile-row {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
+        .container { max-width: 900px; width: 100%; display: flex; flex-direction: column; gap: 3rem; }
+        .header { display: flex; flex-direction: column; gap: 1.5rem; }
+        .profile-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
         .avatar-wrapper {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            overflow: hidden;
-            background: #e0e7ff;
-            flex-shrink: 0;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 3px solid #e0e7ff;
+            position: relative; width: 100px; height: 100px; border-radius: 50%;
+            overflow: hidden; background: #e0e7ff; flex-shrink: 0; cursor: pointer;
+            transition: all 0.2s; border: 3px solid #e0e7ff;
         }
-        .avatar-wrapper:hover {
-            border-color: #4338ca;
-        }
-        .avatar-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .avatar-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: #4338ca;
-            background: #e0e7ff;
-        }
-        .avatar-wrapper input {
-            display: none;
-        }
-        .badge {
-            background: #e0e7ff;
-            color: #4338ca;
-            font-weight: 600;
-            font-size: 0.85rem;
-            padding: 0.3rem 1rem;
-            border-radius: 999px;
-            align-self: flex-start;
-            letter-spacing: 0.5px;
-        }
-        h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 700;
-            letter-spacing: -1px;
-            line-height: 1.1;
-        }
-        .subtitle {
-            font-size: 1.1rem;
-            color: #475569;
-            max-width: 600px;
-            line-height: 1.6;
-        }
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-        }
+        .avatar-wrapper:hover { border-color: #4338ca; }
+        .avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #4338ca; background: #e0e7ff; }
+        .avatar-wrapper input { display: none; }
+        .badge { background: #e0e7ff; color: #4338ca; font-weight: 600; font-size: 0.85rem; padding: 0.3rem 1rem; border-radius: 999px; align-self: flex-start; letter-spacing: 0.5px; }
+        h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; letter-spacing: -1px; line-height: 1.1; }
+        .subtitle { font-size: 1.1rem; color: #475569; max-width: 600px; line-height: 1.6; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
         .project-card {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 0.7rem;
-            border: 1px solid #f1f5f9;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
+            background: white; border-radius: 1.5rem; padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); transition: all 0.2s ease;
+            display: flex; flex-direction: column; gap: 0.7rem; border: 1px solid #f1f5f9;
+            text-decoration: none; color: inherit; cursor: pointer;
         }
-        .project-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
-            border-color: #e2e8f0;
-        }
-        .project-icon {
-            font-size: 2rem;
-        }
-        .project-title {
-            font-weight: 650;
-            font-size: 1.3rem;
-        }
-        .project-desc {
-            color: #475569;
-            font-size: 0.95rem;
-            flex: 1;
-        }
-        .tag {
-            background: #f1f5f9;
-            padding: 0.2rem 0.8rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #334155;
-            align-self: flex-start;
-        }
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-        .skill {
-            background: white;
-            border: 1px solid #e2e8f0;
-            padding: 0.6rem 1.2rem;
-            border-radius: 999px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: #1e293b;
-            transition: 0.15s;
-            cursor: default;
-        }
-        .skill:hover {
-            background: #0f172a;
-            color: white;
-            border-color: #0f172a;
-        }
-        .contact {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 1.5rem;
-            border: 1px solid #f1f5f9;
-            justify-content: flex-start;
-            align-items: center;
-        }
-        .contact a {
-            color: #4338ca;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .contact a:hover {
-            text-decoration: underline;
-        }
-        hr {
-            border: 0.5px solid #e2e8f0;
-        }
-        .dashboard-section {
-            background: #0f172a;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            color: #e2e8f0;
-            overflow: hidden;
-        }
-        .dashboard-section h2 {
-            color: #e2e8f0;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-        .upload-zone {
-            border: 2px dashed #334155;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            transition: all 0.2s;
-            cursor: pointer;
-            background: #1e293b;
-        }
-        .upload-zone:hover {
-            border-color: #3b82f6;
-            background: #1e293b;
-        }
-        .upload-zone input {
-            display: none;
-        }
-        .upload-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 0.8rem;
-            margin-bottom: 1rem;
-        }
-        .kpi-card {
-            background: #1e293b;
-            border-radius: 0.8rem;
-            padding: 1rem;
-            border: 1px solid #334155;
-        }
-        .kpi-label {
-            font-size: 0.7rem;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .kpi-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 0.8rem;
-        }
-        .chart-card {
-            background: #1e293b;
-            border-radius: 0.8rem;
-            padding: 1rem;
-            border: 1px solid #334155;
-        }
-        .chart-card h4 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #cbd5e1;
-        }
-        .chart-container {
-            width: 100%;
-            height: 200px;
-        }
-        .chart-container canvas {
-            width: 100%;
-            height: 100%;
-        }
+        .project-card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-color: #e2e8f0; }
+        .project-icon { font-size: 2rem; }
+        .project-title { font-weight: 650; font-size: 1.3rem; }
+        .project-desc { color: #475569; font-size: 0.95rem; flex: 1; }
+        .tag { background: #f1f5f9; padding: 0.2rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 500; color: #334155; align-self: flex-start; }
+        .skills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .skill { background: white; border: 1px solid #e2e8f0; padding: 0.6rem 1.2rem; border-radius: 999px; font-weight: 500; font-size: 0.9rem; color: #1e293b; transition: 0.15s; cursor: default; }
+        .skill:hover { background: #0f172a; color: white; border-color: #0f172a; }
+        .contact { display: flex; gap: 1.5rem; flex-wrap: wrap; background: white; padding: 1.5rem; border-radius: 1.5rem; border: 1px solid #f1f5f9; justify-content: flex-start; align-items: center; }
+        .contact a { color: #4338ca; text-decoration: none; font-weight: 500; }
+        .contact a:hover { text-decoration: underline; }
+        hr { border: 0.5px solid #e2e8f0; }
+        .dashboard-section { background: #0f172a; border-radius: 1.5rem; padding: 1.5rem; color: #e2e8f0; overflow: hidden; }
+        .dashboard-section h2 { color: #e2e8f0; margin-bottom: 1rem; font-size: 1.5rem; }
+        .upload-zone { border: 2px dashed #334155; border-radius: 1rem; padding: 1.5rem; text-align: center; margin-bottom: 1rem; transition: all 0.2s; cursor: pointer; background: #1e293b; }
+        .upload-zone:hover { border-color: #3b82f6; background: #1e293b; }
+        .upload-zone input { display: none; }
+        .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin-bottom: 1rem; }
+        .kpi-card { background: #1e293b; border-radius: 0.8rem; padding: 1rem; border: 1px solid #334155; }
+        .kpi-label { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 1.5rem; font-weight: 700; }
+        .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; }
+        .chart-card { background: #1e293b; border-radius: 0.8rem; padding: 1rem; border: 1px solid #334155; }
+        .chart-card h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: #cbd5e1; }
+        .chart-container { width: 100%; height: 200px; }
+        .chart-container canvas { width: 100%; height: 100%; }
 
         @media (max-width: 500px) {
-            body {
-                padding: 1rem 0.5rem;
-            }
-            .profile-row {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .contact {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.8rem;
-            }
+            body { padding: 1rem 0.5rem; }
+            .profile-row { flex-direction: column; align-items: flex-start; }
+            .contact { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-
         <!-- Hero -->
         <div class="header">
             <div class="profile-row">
-                <!-- Аватар -->
                 <div class="avatar-wrapper" id="avatarWrapper" title="Нажмите, чтобы загрузить фото">
                     <div class="avatar-placeholder" id="avatarPlaceholder">👤</div>
-                    <img id="avatarImg" src="" alt="Фото" style="display:none;">
+                    <img id="avatarImg" src="data:image/jpeg;base64,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" alt="Фото" style="display:block;">
                     <input type="file" id="avatarInput" accept="image/*">
                 </div>
-                <div>
-                    <div class="badge">▷ Открыт к проектам</div>
-                </div>
+                <div><div class="badge">▷ Открыт к проектам</div></div>
             </div>
             <h1>Кирилл Чумаков</h1>
             <p class="subtitle">
@@ -318,11 +109,14 @@
                     <span class="tag">Vibe-coding • Прототип</span>
                 </a>
 
-                <a href="https://disk.yandex.ru/i/Rn8xkvpb2ZPzTQ" target="_blank" class="project-card">
-                    <div class="project-icon">📁</div>
-                    <div class="project-title">Проект на Яндекс.Диске</div>
-                    <div class="project-desc">Экспериментальная разработка с применением AI-инструментов.</div>
-                    <span class="tag">AI-генерация • Макет</span>
+                <a href="https://car-explainer--kirill136368.replit.app/porsche-360/" target="_blank" class="project-card">
+                    <div class="project-icon">🏎️</div>
+                    <div class="project-title">Porsche 360° X-Ray</div>
+                    <div class="project-desc">
+                        Интерактивный 3D-инструмент для изучения устройства Porsche. 
+                        Режим рентгена, детальный обзор двигателя, подвески, тормозов и других узлов.
+                    </div>
+                    <span class="tag">Three.js • WebGL • 3D</span>
                 </a>
 
             </div>
@@ -341,33 +135,15 @@
             </div>
 
             <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-label">Всего записей</div>
-                    <div class="kpi-value" id="kpiTotal">—</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Сумма (руб)</div>
-                    <div class="kpi-value" id="kpiSum">—</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Среднее</div>
-                    <div class="kpi-value" id="kpiAvg">—</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Максимум</div>
-                    <div class="kpi-value" id="kpiMax">—</div>
-                </div>
+                <div class="kpi-card"><div class="kpi-label">Всего записей</div><div class="kpi-value" id="kpiTotal">—</div></div>
+                <div class="kpi-card"><div class="kpi-label">Сумма (руб)</div><div class="kpi-value" id="kpiSum">—</div></div>
+                <div class="kpi-card"><div class="kpi-label">Среднее</div><div class="kpi-value" id="kpiAvg">—</div></div>
+                <div class="kpi-card"><div class="kpi-label">Максимум</div><div class="kpi-value" id="kpiMax">—</div></div>
             </div>
 
             <div class="charts-grid">
-                <div class="chart-card">
-                    <h4>📈 Распределение значений</h4>
-                    <div class="chart-container"><canvas id="chartDist"></canvas></div>
-                </div>
-                <div class="chart-card">
-                    <h4>📊 По категориям</h4>
-                    <div class="chart-container"><canvas id="chartCat"></canvas></div>
-                </div>
+                <div class="chart-card"><h4>📈 Распределение значений</h4><div class="chart-container"><canvas id="chartDist"></canvas></div></div>
+                <div class="chart-card"><h4>📊 По категориям</h4><div class="chart-container"><canvas id="chartCat"></canvas></div></div>
             </div>
         </section>
 
@@ -407,7 +183,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
 
     <script>
-        // ============ ЗАГРУЗКА ФОТО ============
+        // ============ ЗАГРУЗКА ФОТО (оставлена возможность сменить) ============
         const avatarWrapper = document.getElementById('avatarWrapper');
         const avatarInput = document.getElementById('avatarInput');
         const avatarImg = document.getElementById('avatarImg');
@@ -429,13 +205,11 @@
 
         // ============ ДАШБОРД ============
         const dashboardData = { rawNumbers: [], categories: {}, fileName: '' };
-
         const uploadZone = document.getElementById('uploadZone');
         const fileInput = document.getElementById('fileInput');
 
         uploadZone.addEventListener('click', () => fileInput.click());
-        uploadZone.addEventListener('dragover', (e) => { e.preventDefault();
-            uploadZone.style.borderColor = '#3b82f6'; });
+        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.style.borderColor = '#3b82f6'; });
         uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = '#334155'; });
         uploadZone.addEventListener('drop', (e) => {
             e.preventDefault();
@@ -453,8 +227,7 @@
             const ext = file.name.split('.').pop().toLowerCase();
             if (ext === 'csv') {
                 const reader = new FileReader();
-                reader.onload = (e) => { parseCSV(e.target.result);
-                    updateDashboard(); };
+                reader.onload = (e) => { parseCSV(e.target.result); updateDashboard(); };
                 reader.readAsText(file);
             } else if (ext === 'xlsx' || ext === 'xls') {
                 const reader = new FileReader();
@@ -463,22 +236,18 @@
                     const workbook = XLSX.read(data, { type: 'array' });
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
                     const json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-                    parseSheetData(json);
-                    updateDashboard();
+                    parseSheetData(json); updateDashboard();
                 };
                 reader.readAsArrayBuffer(file);
             } else if (ext === 'docx') {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     mammoth.extractRawText({ arrayBuffer: e.target.result }).then(result => {
-                        parseWordText(result.value);
-                        updateDashboard();
+                        parseWordText(result.value); updateDashboard();
                     });
                 };
                 reader.readAsArrayBuffer(file);
-            } else {
-                alert('Поддерживаются форматы: .xlsx, .docx, .csv');
-            }
+            } else { alert('Поддерживаются форматы: .xlsx, .docx, .csv'); }
         }
 
         function parseCSV(text) {
@@ -496,8 +265,7 @@
                     if (cat && !isNaN(val)) categories[cat] = (categories[cat] || 0) + val;
                 }
             });
-            dashboardData.rawNumbers = numbers;
-            dashboardData.categories = categories;
+            dashboardData.rawNumbers = numbers; dashboardData.categories = categories;
         }
 
         function parseSheetData(rows) {
@@ -514,8 +282,7 @@
                     if (cat && !isNaN(val)) categories[cat] = (categories[cat] || 0) + val;
                 }
             });
-            dashboardData.rawNumbers = numbers;
-            dashboardData.categories = categories;
+            dashboardData.rawNumbers = numbers; dashboardData.categories = categories;
         }
 
         function parseWordText(text) {
@@ -536,8 +303,7 @@
                     if (cat && !isNaN(val)) categories[cat] = (categories[cat] || 0) + val;
                 }
             });
-            dashboardData.rawNumbers = numbers;
-            dashboardData.categories = categories;
+            dashboardData.rawNumbers = numbers; dashboardData.categories = categories;
         }
 
         function updateDashboard() {
@@ -585,17 +351,13 @@
             const bins = 8;
             const binWidth = range / bins;
             const histogram = new Array(bins).fill(0);
-            numbers.forEach(n => { const idx = Math.min(Math.floor((n - min) / binWidth), bins - 1);
-                histogram[idx]++; });
+            numbers.forEach(n => { const idx = Math.min(Math.floor((n - min) / binWidth), bins - 1); histogram[idx]++; });
             const maxCount = Math.max(...histogram);
             ctx.strokeStyle = '#1e293b';
             ctx.lineWidth = 0.5;
             for (let i = 0; i <= 3; i++) {
                 const y = pad.top + (ph / 3) * i;
-                ctx.beginPath();
-                ctx.moveTo(pad.left, y);
-                ctx.lineTo(w - pad.right, y);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w - pad.right, y); ctx.stroke();
             }
             const barGap = 4;
             const barW = (pw / bins) - barGap;
@@ -607,14 +369,11 @@
                 gradient.addColorStop(0, '#3b82f6');
                 gradient.addColorStop(1, '#1d4ed8');
                 ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
-                ctx.fill();
+                ctx.beginPath(); ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]); ctx.fill();
                 ctx.fillStyle = '#64748b';
                 ctx.font = '9px Inter, sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText(Math.round(min + binWidth * i) + '-' + Math.round(min + binWidth * (i + 1)), x + barW /
-                    2, h - pad.bottom + 14);
+                ctx.fillText(Math.round(min + binWidth * i) + '-' + Math.round(min + binWidth * (i + 1)), x + barW / 2, h - pad.bottom + 14);
             });
         }
 
@@ -642,19 +401,14 @@
             ctx.lineWidth = 0.5;
             for (let i = 0; i <= 3; i++) {
                 const y = pad.top + (ph / 3) * i;
-                ctx.beginPath();
-                ctx.moveTo(pad.left, y);
-                ctx.lineTo(w - pad.right, y);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w - pad.right, y); ctx.stroke();
             }
             entries.forEach(([cat, val], i) => {
                 const x = pad.left + (pw / entries.length) * i + barGap / 2;
                 const barH = (val / maxVal) * ph;
                 const y = pad.top + ph - barH;
                 ctx.fillStyle = colors[i % colors.length];
-                ctx.beginPath();
-                ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
-                ctx.fill();
+                ctx.beginPath(); ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]); ctx.fill();
                 ctx.fillStyle = '#94a3b8';
                 ctx.font = '9px Inter, sans-serif';
                 ctx.textAlign = 'center';
